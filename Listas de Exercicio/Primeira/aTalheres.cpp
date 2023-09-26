@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// ACCEPTED
 int main() {
     std::ios::sync_with_stdio(false);
     cin.tie(NULL);
