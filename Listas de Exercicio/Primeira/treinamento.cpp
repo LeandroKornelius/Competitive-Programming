@@ -2,43 +2,7 @@
 #include <vector> 
 using namespace std;
 
-int main() {
-    std::ios::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    int numComps;
-    vector<int> probsComps;
-    int probs;
-    int contador = 0;
-    int dia = 1;
-
-    cin >> numComps;
-
-    for (int i = 0; i < numComps; i++) {
-        cin >> probs;
-        probsComps.push_back(probs);
-    }
-
-    sort(probsComps.begin(), probsComps.end());
-
-    while (probsComps.size() != 0) {
-        if (probsComps[0] >= dia) {
-            contador++;
-            dia++;
-        }
-        probsComps.erase(probsComps.begin());
-    }
-
-    cout << contador << "\n";
-
-    return 0;
-}
-
-/*
-#include<bits/stdc++.h>
-#include <vector> 
-using namespace std;
-
+// ACCEPTED
 int main() {
     std::ios::sync_with_stdio(false);
     cin.tie(NULL);
@@ -69,4 +33,4 @@ int main() {
 
     return 0;
 }
-*/
+
