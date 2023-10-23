@@ -1,37 +1,34 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// ACCEPTED
 int main() {
     std::ios::sync_with_stdio(false);
     cin.tie(NULL);
 
     string entrada;
-    int contadorFormigas = 0;
+    char ultimo = 'p';
+    char atual;
     int total = 0;
-    bool primeiraRa = true;
-    char ultimo;
+    int contForms = 0;
 
     cin >> entrada;
 
     for (int i = 0; i < entrada.size(); i++) {
-        if (entrada[i] == 'r') {
-            if (primeiraRa) {
-                primeiraRa = false;
-            } else {
-                total += contadorFormigas;
-            }
-            contadorFormigas = 0;
-            ultimo = 'r';
-        } else if (entrada[i] == 's') {
-            contadorFormigas = 0;
-            ultimo = 's';
+        atual = entrada[i];
+        if (atual == '.') {
+            contForms++;
         } else {
-            contadorFormigas++;
+            if (atual == 'r' && ultimo == 'r') {
+                total += contForms;
+            }
+            contForms = 0;
+            ultimo = atual;
         }
     }
 
     if (ultimo == 'r') {
-        total += contadorFormigas;
+        total += contForms;
     }
 
     cout << total << "\n";
