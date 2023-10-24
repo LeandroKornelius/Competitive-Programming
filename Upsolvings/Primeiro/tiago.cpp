@@ -1,12 +1,25 @@
-#include <bits/stdc++.h>
+#include <iostream>
+
 using namespace std;
- 
+
 int main() {
-  std::ios::sync_with_stdio(false);
-  cin.tie(NULL);
+    int t;
+    cin >> t;
 
-  
- 
-  return 0;
+    for (int i = 0; i < t; i++) {
+      int x;
+      cin >> x;
 
+      int a = 1, b = x - 1;
+      /*
+      Por que funciona?
+      mdc de 1 e qualquer n = 1
+      mmc de 1 e qualquer x - 1 = x - 1
+      Logo, mmc(1, x - 1) + mdc(1, x - 1) = 1 + (x - 1) = x
+      */
+
+      cout << a << " " << b << "\n";
+    }
+
+    return 0;
 }
