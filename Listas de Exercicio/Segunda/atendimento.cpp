@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// ACCEPTED
 int main() {
     std::ios::sync_with_stdio(false);
     cin.tie(NULL);
@@ -29,16 +30,9 @@ int main() {
         int pos;
 
         for (int i = 0; i < funcs; i++) {
-            if (caixas[i] * temposFuncs[i] == menor) {
-                if (temposFuncs[i] < temposFuncs[pos]) {
-                    menor = caixas[i] * temposFuncs[i];
-                    pos = i;
-                }
-            } else {
-                if (caixas[i] * temposFuncs[i] < menor) {
-                    menor = caixas[i] * temposFuncs[i];
-                    pos = i;
-                }
+            if (caixas[i] * temposFuncs[i] < menor) {
+                menor = caixas[i] * temposFuncs[i];
+                pos = i;
             }
         }
 
@@ -64,3 +58,41 @@ int main() {
 
     return 0;
 }
+
+/*
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int main() {
+    int funcionarios, clientes, pessoa, tempoTotal = 0;
+    scanf("%d %d", &funcionarios, &clientes);
+    
+    vector<int> temposCaixa(funcionarios);
+    for (int i = 0; i < funcionarios; i++) {
+        scanf("%d", &temposCaixa[i]);
+    }
+ 
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> caixas;
+ 
+    for (int i = 0; i < funcionarios; i++) {
+        caixas.push({0, i});
+    }
+ 
+    for (int i = 0; i < clientes; i++) {
+        scanf("%d", &pessoa);
+ 
+        pair<int, int> caixa = caixas.top();
+        caixas.pop();
+ 
+        int terminoAtendimento = caixa.first;
+ 
+        tempoTotal = max(tempoTotal, terminoAtendimento + pessoa * temposCaixa[caixa.second]);
+ 
+        caixas.push({terminoAtendimento + pessoa * temposCaixa[caixa.second], caixa.second});
+    }
+ 
+    cout << tempoTotal << endl;
+ 
+    return 0;
+}
+*/
