@@ -25,16 +25,31 @@ int main() {
     }
 
     while(!filaItens.empty()) {
-        int posMenor = lower_bound(caixas.begin(), caixas.end(), 0) - caixas.begin();
+        int menor = 101 * 101;
+        int pos;
 
-        if (caixas[posMenor] == 0) {
+        for (int i = 0; i < funcs; i++) {
+            if (caixas[i] * temposFuncs[i] == menor) {
+                if (temposFuncs[i] < temposFuncs[pos]) {
+                    menor = caixas[i] * temposFuncs[i];
+                    pos = i;
+                }
+            } else {
+                if (caixas[i] * temposFuncs[i] < menor) {
+                    menor = caixas[i] * temposFuncs[i];
+                    pos = i;
+                }
+            }
+        }
+
+        if (caixas[pos] == 0) {
             // consigo colocar o tempo do cliente
             int prov = filaItens.front();
             filaItens.pop();
-            caixas[posMenor] = prov * temposFuncs[posMenor];
+            caixas[pos] = prov * temposFuncs[pos];
         } else {
             // reduzir o tempo do minimo para todos
-            int menor = caixas[posMenor];
+            int menor = caixas[pos];
             total += menor;
             for (int i = 0; i < funcs; i++) {
                 caixas[i] -= menor;
