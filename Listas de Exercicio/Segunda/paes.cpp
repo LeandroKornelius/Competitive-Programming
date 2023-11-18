@@ -1,77 +1,77 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
-    std::ios::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    int n, m, p;
-    int t = 1, qnt = 1;
-    queue<int> f;
-
+    int n, m;
     cin >> n >> m;
-    int certos = n;
 
-    // adicionando termos na fila
-    for (int i = 0; i < n; i++) {
+    queue<int> fermentando;
+    int total = 0;
+    int tempo = 1;
 
-        // estao em tempo ideal ou passaram removidos, contando perdidos
-        while (!f.empty() && f.front() >= t) {
-            if (f.front() > t) {
-                certos--;
-            }
-            f.pop();
-        }
-        
-        // logica para recem produzido
-        cin >> p;
+    for (int i = 0; i < n; ++i) {
+        int tferm;
+        cin >> tferm;
 
-        if (!f.empty()) {
-
-            // colocado se ferm seja concluida no mesmo momento ou antes do primeiro
-            if (p + t <= f.front()) {
-                f.push(p + t);
+        // primeira op de retirar ate achar alg ainda em fermentacao
+        while (!fermentando.empty() && fermentando.front() >= tempo) {
+            if (fermentando.front() == tempo) {
+                total++;
+                fermentando.pop();
             } else {
-                int contador = 0;
-                vector<int> inseridos;
-                inseridos.push_back(p);
+                if (fermentando.front() > tempo) {
+                    fermentando.pop();
+                }
+            }
+        }
 
-                // removendo necessarios e colocando os fermentandos conforme criterio
-                while (!f.empty() && contador < m) {
-                    int primeiro = f.front();
-                    f.pop();
-                    if (primeiro >= t) {
-                        if (primeiro > t) {
-                            certos--;
-                        }
+        // restante da logica
+        if (fermentando.empty() || fermentando.front() < tempo + tferm) {
+            fermentando.push(tempo + tferm);
+        } else {
+            int contador = 0;
+            vector<int> prov;
+            bool flag = true;
+
+            while (!fermentando.empty() || contador < m) {
+                if (fermentando.front() == tempo) {
+                    total++;
+                } else {
+                    if (fermentando.front() > tempo) {
+
                     } else {
-                        // primeiro < t logo preciso colocar dnv na fila
-                        inseridos.push_back(primeiro);
+                        if (flag) {
+                            prov.push_back(tempo + tferm);
+                            flag = false;
+                        }
+                        prov.push_back(fermentando.front());
                     }
                 }
-
-                sort(inseridos.begin(), inseridos.end(), greater<int>());
-
-                for (int i = 0; i < inseridos.size(); i++) {
-                    f.push(inseridos[i]);
-                }
+                fermentando.pop();
+                contador++;
             }
-        qnt++;
-        t++;
+
+            sort(prov.rbegin(), prov.rend());
+
+            for (int j = 0; j < prov.size(); j++) {
+                fermentando.push(prov[j]);
+            }
+        }
+        tempo++;
+    }
+
+    // recebi entradas agora preciso processar a fila
+    while (!fermentando.empty()) {
+        if (fermentando.front() == tempo) {
+            total++;
+            fermentando.pop();
+        } else {
+            if (fermentando.front() > tempo) {
+                fermentando.pop();
+            }
         }
     }
 
-    // esvaziando fila
-
-    while (!f.empty() && f.front() >= t) {
-        if (f.front() > t) {
-            certos--;
-        }
-        f.pop();
-        t++;
-    }
-
-    cout << certos << "\n";
-
+    cout << total << endl;
     return 0;
 }
