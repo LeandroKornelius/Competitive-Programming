@@ -9,19 +9,25 @@ int main() {
     cin.tie(NULL);
     
     int t, n;
+    vector<int> nums;
     cin >> t;
 
     for (int i = 0; i < t; i++) {
         cin >> n;
-        while (true) {
-            if (0 == (n & (n - 1))) {
-                break;
-            } else {
-                n = n & (n - 1);
+        int maiorPot = 1;
+        while (maiorPot < n) {
+            maiorPot = maiorPot << 1;
+        }
+        maiorPot = maiorPot >> 1;
+        cout << maiorPot << " ";
+        for (int j = 0; j < n; j++) {
+            if (j != maiorPot) {
+                cout << j << " ";
             }
         }
-        cout << n - 1 << endl;
+        cout << endl;       
     }
+
 
     return 0;
 }
