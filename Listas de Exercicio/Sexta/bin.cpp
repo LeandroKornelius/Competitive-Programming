@@ -5,7 +5,7 @@ using namespace std;
 
 int n;
 vector<int> valores;
-int tabela[1000005];
+int tabela[1000005]; // depende do limite do n
 
 int dp(int k) {
     if (k == 0) {
