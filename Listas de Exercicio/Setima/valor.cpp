@@ -3,6 +3,7 @@ using namespace std;
 
 #define ll long long
 
+// ACCEPTED
 int main() {
     cin.tie(NULL);
 
