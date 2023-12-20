@@ -19,22 +19,20 @@ int main() {
         id.push_back(aux);
     }
 
+    sort(id.begin(), id.end());
+
     for (int j = 0; j < m; j++) {
         int consulta;
         cin >> consulta;
-        bool achou = false;
-        int k = 0;
-        for (k; k < n; k++) {
-            if (id[k] == consulta) {
-                achou = true;
-                break;
-            }
-        }
-        if (achou) {
-            cout << k + 1 << " ";
+
+        int indL = lower_bound(id.begin(), id.end(), consulta) - id.begin();
+
+        if (id[indL] == consulta) {
+            cout << indL + 1 << " ";
         } else {
             cout << "-1" << " ";
         }
+
     }
 
     return 0;
