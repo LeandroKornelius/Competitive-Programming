@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int dfs(int i, int j, int id, vector<vector<char>>& city, vector<vector<pair<bool, int>>>& tracker) {
+int dfs(int i, int j, int id, vector<vector<char>>& city, vector<vector<pair<bool, int>>>& tracker, set<int>& ids) {
     int nextI = i, nextJ = j;
 
     // Based on the direction of the current square, will adapt the index of the next square
@@ -16,21 +16,13 @@ int dfs(int i, int j, int id, vector<vector<char>>& city, vector<vector<pair<boo
     if (tracker[nextI][nextJ].first) {
         // It has already visited the next square
         tracker[i][j].second = tracker[nextI][nextJ].second;
+        ids.insert(tracker[i][j].second);
+
     } else {
         // It has not visited the next square
-        tracker[i][j].second = dfs(nextI, nextJ, id, city, tracker);
+        tracker[i][j].second = dfs(nextI, nextJ, id, city, tracker, ids);
     }
     return tracker[i][j].second;
-}
-
-// Complexity - O(n)
-bool inside(vector<int> v, int n) {
-    for (int i = 0; i < v.size(); i++) {
-        if (v[i] == n) {
-            return true;
-        }
-    }
-    return false;
 }
 
 int main() {
@@ -44,6 +36,8 @@ int main() {
     vector<vector<char>> city(n, vector<char>(m));
     // Matrix will have if the square has been visited and the graph id it will eventually lead to 
     vector<vector<pair<bool, int>>> tracker(n, vector<pair<bool, int>>(m));
+    // Will hold the unique ids from the graphs formed
+    set<int> uniqueIds; // Sets insert in O(logn) complexity
 
 
     int identifier = 1;
@@ -63,24 +57,11 @@ int main() {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             int squareIdentifier = tracker[i][j].second;
-            dfs(i, j, identifier, city, tracker);
+            dfs(i, j, identifier, city, tracker, uniqueIds);
         }
     }
 
-    int traps = 0;
-    vector<int> graphsId; // Will hold the id of the graphs formed
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            // Checks if the id is already in the graphsId, if not adds it and counts one more trap
-            if (!inside(graphsId, tracker[i][j].second)) {
-                graphsId.push_back(tracker[i][j].second);
-                traps++;
-            }
-        }
-    }
-
-    cout << traps << endl;
+    cout << uniqueIds.size() << endl;
 
     return 0;
 }
