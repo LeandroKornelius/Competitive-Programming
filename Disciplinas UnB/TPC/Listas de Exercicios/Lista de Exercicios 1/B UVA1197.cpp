@@ -1,12 +1,10 @@
-// Problemas -> OBI Fusao e Codeforces 277A (a fazer)
-
 #include<bits/stdc++.h>
-
 using namespace std;
 
 class DSU {
     vector<int> parent;
     vector<int> card;
+    vector<int> elements;
 
     public: 
         /*
@@ -17,7 +15,7 @@ class DSU {
         */
         DSU(int n): parent(n + 1), card(n + 1, 1)
         {
-            for (int i = 1; i <= n; i++) parent[i] = i;
+            for (int i = 0; i <= n; i++) parent[i] = i;
         }
 
         // Encontra qual o representante de um elemento x qualquer atraves de recursão
@@ -48,33 +46,39 @@ class DSU {
             // atribui que o pai de "b" após a união é "a"
             parent[b] = a;
         }
+
+        int find_card(int a) {
+            int aux = find_set(a);
+            return card[aux];
+        }
 };
 
-int main(){
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    // Cria 5 conjuntos contendo 1 elemento cada: {1}, {2}, {3}, {4} e {5}
-    DSU conj(5);
-    
-    conj.join_sets(2,3);
-    conj.join_sets(1,3);
-    
-    if(conj.same_set(1,2))
-        printf("1 e 2 estão no mesmo conjunto.\n");
-    else
-        printf("1 e 2 NÃO estão no mesmo conjunto.\n");
-    
-    conj.join_sets(5,4);
-    
-    if(conj.same_set(2,4))
-        printf("2 e 4 estão no mesmo conjunto.\n");
-    else
-        printf("2 e 4 NÃO estão no mesmo conjunto.\n");
-    
-    printf("Representante do conjunto que contém 4: %d\n",conj.find_set(4));
-    
-    printf("Representante do conjunto que contém 2: %d\n",conj.find_set(2));
-    
-    printf("Representante do conjunto que contém 1: %d\n",conj.find_set(1));
+    int n, m;
+
+    cin >> n >> m;
+    while (!((n == 0) && (m == 0))) {
+        DSU dsu(n);
+        int k;
+        for (int i = 0; i < m; i++) {
+            cin >> k;
+            if (k > 0) {
+                int first, aux;
+                cin >> first;
+                for (int j = 1; j < k; j++) {
+                    cin >> aux;
+                    if (!dsu.same_set(first, aux)) {
+                        dsu.join_sets(first, aux);
+                    }
+                }
+            }
+        }
+        cout << dsu.find_card(0) << '\n';        
+        cin >> n >> m;
+    }
 
     return 0;
 }
