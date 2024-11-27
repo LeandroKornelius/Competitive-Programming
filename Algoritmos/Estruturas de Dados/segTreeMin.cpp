@@ -4,24 +4,22 @@
  * Prof. Dr. Vinicius R. P. Borges
  * 
  * Tópico: Estruturas de Dados Avançadas - Segment Tree
- * Objetivo: Implementar uma Segment Tree de Soma
- *           https://codeforces.com/edu/course/2/lesson/4/1/practice/contest/273169/problem/A
+ * Objetivo: Implementar uma Segment Tree de Mínimos
+ *           https://codeforces.com/edu/course/2/lesson/4/1/practice/contest/273169/problem/B
  * 
- * Compilar no terminal: g++ classic_segtree_sum.cpp -std=c++11 -o segtree_sum
- * Executar: ./segtree_sum
+ * Compilar no terminal: g++ classic_segtree_min.cpp -std=c++11 -o segtree_min
+ * Executar: ./segtree_min
  */
 
 #include<bits/stdc++.h>
 
 using namespace std;
 
-typedef long long ll;
-
 class SegTree{
-    vector<ll> st;
+    vector<int> st;
     vector<int> v;
     int n;
-    int elem_neutro = 0;
+    int elem_neutro = 1e9+7;
 
 public:
     SegTree(int size, vector<int> source): st(4*size,0), v(size,0)
@@ -31,9 +29,9 @@ public:
             v[i] = source[i];
     }
     
-    ll f(ll a, ll b)
+    int f(int a, int b)
     {
-        return a+b;
+        return min(a,b);
     }
     
     void build(int l, int r, int nodo)
@@ -77,7 +75,7 @@ public:
         update_range(i,x,l,r,nodo);
     }
 
-    ll query_range(int ql, int qr, int l, int r, int nodo)
+    int query_range(int ql, int qr, int l, int r, int nodo)
     {
         
         if(l > qr or r < ql)
@@ -91,12 +89,12 @@ public:
         }
         
         int mid = (l+r)/2;
-        ll sum_esq = query_range(ql,qr,l,mid,2*nodo);
-        ll sum_dir = query_range(ql,qr,mid+1,r,2*nodo+1);
-        return f(sum_esq,sum_dir); 
+        int min_esq = query_range(ql,qr,l,mid,2*nodo);
+        int min_dir = query_range(ql,qr,mid+1,r,2*nodo+1);
+        return f(min_esq,min_dir); 
     }
 
-    ll query(int ql, int qr)
+    int query(int ql, int qr)
     {
         int l = 0;
         int r = n-1;
@@ -130,7 +128,7 @@ int main(){
         if(op == 1)
             tree.update(x,y);
         else
-            printf("%lld\n",tree.query(x,y-1));
+            printf("%d\n",tree.query(x,y-1));
     }
     
     return 0;
