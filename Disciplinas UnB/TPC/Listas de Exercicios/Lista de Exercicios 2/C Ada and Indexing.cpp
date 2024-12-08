@@ -28,27 +28,26 @@ int main(){
     int n, q;
     cin >> n >> q;
 
-    vector<string> words;
+    string common;
     for (int i = 0; i < n; i++) {
         string aux;
         cin >> aux;
-        words.push_back(aux);
+        common += aux + "#";
     }
 
     for (int i = 0; i < q; i++) {
         string prefix;
         cin >> prefix;
         int c = 0;
-        for (int j = 0; j < words.size(); j++) {
-            string s = prefix + "/" + words[j];
-            vector<int> z = z_function_cp(s);
+        string s = prefix + "/" + common;
+        vector<int> z = z_function_cp(s);
+        for (int j = prefix.size() + 1; j < s.size(); j++) {
             // Since it must be a prefix from the word, I only need to check the first index excluding the prefix and separator char
-            if (z[prefix.size() + 1] == prefix.size()) {
+            if ((s[j - 1] == '#' || s[j - 1] == '/') && z[j] == prefix.size()) {
                 c++;
             }
         }
-        cout << c << endl;
-    }  
-      
+        cout << c << endl;         
+    }
     return 0;
 }
