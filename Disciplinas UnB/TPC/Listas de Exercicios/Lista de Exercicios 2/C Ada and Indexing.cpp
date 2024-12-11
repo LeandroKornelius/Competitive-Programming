@@ -41,6 +41,11 @@ int main(){
         int c = 0;
         string s = prefix + "/" + common;
         vector<int> z = z_function_cp(s);
+        // // Debugging
+        // for (int k = 0; k < z.size(); k++) {
+        //     cout << z[k] << " ";
+        // }
+        // cout << endl;
         for (int j = prefix.size() + 1; j < s.size(); j++) {
             // Since it must be a prefix from the word, I only need to check the first index excluding the prefix and separator char
             if ((s[j - 1] == '#' || s[j - 1] == '/') && z[j] == prefix.size()) {
