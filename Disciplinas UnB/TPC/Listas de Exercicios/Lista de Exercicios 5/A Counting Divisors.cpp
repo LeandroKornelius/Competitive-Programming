@@ -9,13 +9,11 @@ int main() {
     cin >> n;
 
     while (n--) {
-        set<int> divs;
         int x;
         cin >> x;
-        int lim = sqrt(x);
-
-        for (int i = 1; i <= x; i++) {
-            if (n % i == 0) {
+        set<int> divs;
+        for (int i = 1; i <= sqrt(x); i++) {
+            if (x % i == 0) {
                 divs.insert(i);
                 divs.insert(x / i);
             }
